@@ -1,11 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const addToCartButtons = document.querySelectorAll(".add-to-cart");
+  const addToCartButtons = document.querySelectorAll(".card");
   const shoppingList = document.getElementById("shopping-list");
-  const totalPriceElement = document.querySelector(".total-price span");
-  const discountElement = document.querySelector(".discount span");
-  const totalElement = document.querySelector(".total span");
+  const totalPriceElement = document.querySelector(".grossTotal");
+  const discountElement = document.querySelector(".discount");
+  const totalElement = document.querySelector("#netTotal");
+  const discountButton = document.querySelector(".apply");
+  const discountInput = document.querySelector(".discountInput");
+  const applyCouponButton = document.querySelector(".apply");
 
   let totalPrice = 0;
+  let total = 0;
   let discount = 0;
 
   addToCartButtons.forEach((button) => {
@@ -20,22 +24,39 @@ document.addEventListener("DOMContentLoaded", function () {
       shoppingList.appendChild(listItem);
       totalPrice += price;
       updatePrices();
+      isDiscount();
+      calculateDiscount();
     });
   });
 
   function updatePrices() {
     totalPriceElement.textContent = `${totalPrice.toFixed(2)} Tk`;
     discountElement.textContent = `${discount.toFixed(2)} Tk`;
-    totalElement.textContent = `${(totalPrice - discount).toFixed(2)} Tk`;
+    totalElement.innerHTML = `${total ? total : totalPrice} Tk`;
   }
 
-  // Handle coupon apply button
-  const applyCouponButton = document.querySelector(".btn-secondary");
+  function isDiscount() {
+    if (totalPrice >= 200) {
+      applyCouponButton.removeAttribute("disabled");
+      applyCouponButton.classList.remove("disabled");
+    }
+  }
+
+  function calculateDiscount() {
+    if (totalPrice < 200) return;
+
+    const couponCode = discountInput.value;
+
+    if (couponCode === "SELL200") {
+      total = totalPrice - (totalPrice / 100) * 20;
+      discount = (totalPrice / 100) * 20;
+      updatePrices();
+      discountInput.value = "";
+    }
+  }
+
   applyCouponButton.addEventListener("click", function () {
-    // You can implement coupon logic here, updating the discount value
-    // For now, let's just subtract a fixed value of 10 as a demonstration
-    discount = 10;
-    updatePrices();
+    calculateDiscount();
   });
 
   // Handle make purchase button

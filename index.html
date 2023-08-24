@@ -464,23 +464,25 @@
               <input
                 type="text"
                 placeholder="Type here"
-                class="input input-bordered"
+                class="input input-bordered discountInput"
               />
-              <button class="rounded-r-lg btn-secondary p-2">Apply</button>
+              <button
+                class="rounded-r-lg btn-secondary p-2 disabled:opacity-50 apply"
+                disabled
+              >
+                Apply
+              </button>
             </div>
           </div>
         </div>
 
-        <div id="shopping-list " class="mb-4">
-          <li>Lorem, ipsum dolor.</li>
-          <li>Lorem, ipsum dolor.</li>
-          <li>Lorem, ipsum dolor.</li>
-          <li>Lorem, ipsum dolor.</li>
-        </div>
+        <div id="shopping-list" class="mb-4"></div>
         <div>
-          <p>Total Price <span class="text-slate-400"> 0 Tk</span></p>
-          <p>Discount <span class="text-slate-400"> 0 Tk</span></p>
-          <p>Total <span class="text-slate-400"> 0 Tk</span></p>
+          <p>
+            Total Price <span class="text-slate-400 grossTotal"> 0 Tk</span>
+          </p>
+          <p>Discount <span class="text-slate-400 discount"> 0 Tk</span></p>
+          <p>Total <span class="text-slate-400" id="netTotal"> 0 Tk</span></p>
         </div>
         <button class="btn btn-active btn-secondary mt-2 px-12">
           Make Purchase
